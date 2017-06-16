@@ -42,11 +42,12 @@ public class BinaryTree {
      * Insert node into Binary Tree
      *
      * @param  data  insert data
+     * @return  result of insertion
      */
-    public void insert(int data) {
+    public boolean insert(int data) {
         if (root == null) {
             root = new Node(data);
-            return;
+            return true;
         }
 
         Node current = root;
@@ -54,7 +55,9 @@ public class BinaryTree {
         boolean isLeft = true;
         while (current != null) {
             parent = current;
-            if (current.data > data) {
+            if (current.data == data) {
+                return false;
+            } else if (current.data > data) {
                 current = current.left;
                 isLeft = true;
             } else {
@@ -64,8 +67,10 @@ public class BinaryTree {
         }
         if (isLeft) {
             parent.left = new Node(data);
+            return true;
         } else {
             parent.right = new Node(data);
+            return true;
         }
     }
 
@@ -110,7 +115,7 @@ public class BinaryTree {
                     current = null;
                 }
 
-                // if it has two children
+                // if it has two children, find the smallest node in its right child to replace it
                 Node succesor = findSuccessor(current);
                 succesor.left = current.right;
                 succesor.right = current.right;
